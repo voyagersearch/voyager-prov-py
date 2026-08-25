@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voyager-prov-py"
+version = "0.1.0"
+description = "PROV emission middleware for Voyager workflows (D100 / OSPD 2026)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [{ name = "Voyager Search" }]
+
+dependencies = [
+  "jsonschema>=4.21",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "mypy>=1.8",
+  "types-jsonschema>=4.21",
+]
+
+[project.scripts]
+voyager-prov = "voyager_prov.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+voyager_prov = ["profile/*.json", "profile/*.ttl", "py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+strict = true
+python_version = "3.10"
