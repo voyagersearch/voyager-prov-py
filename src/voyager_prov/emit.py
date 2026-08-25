@@ -32,12 +32,20 @@ from .types import (
 
 _ACTIVITY_URN_PREFIX = f"{VOYAGER_URN_NS}activity:"
 _ACTIVITY_TYPES: set[ActivityType] = {
+    # Layer 2 — RAG pipeline
     "connect",
     "extract",
     "chunk",
     "embed",
     "retrieve",
     "generate",
+    # Layer 1 — HQ-side FAS enrichment
+    "geotag",
+    "classify-commodity",
+    "classify-region",
+    "nlp-extract-entities",
+    "ocr",
+    "field-normalize",
 }
 # ISO 8601 with Z or ±HH:MM offset; millisecond precision optional.
 _ISO_INSTANT_RE = re.compile(

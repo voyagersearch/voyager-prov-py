@@ -11,15 +11,30 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Literal, Mapping, Optional
 
-# One of the six RAG pipeline activity types. When D110's register hardens,
-# `activity_type_uri()` swaps these to register URIs at emission time.
+# Voyager pipeline activityType stubs.
+#
+# Layer 2 (RAG pipeline, main plan): connect | extract | chunk | embed | retrieve | generate.
+# Layer 1 (HQ-side FAS enrichment, Appendix A — CFP §5.1 geospatial-ops
+# alignment): geotag | classify-commodity | classify-region |
+# nlp-extract-entities | ocr | field-normalize.
+#
+# When D110's register hardens, `activity_type_uri()` swaps any of these to
+# register URIs at emission time — the shape is stable across both layers.
 ActivityType = Literal[
+    # Layer 2 — RAG pipeline
     "connect",
     "extract",
     "chunk",
     "embed",
     "retrieve",
     "generate",
+    # Layer 1 — HQ-side FAS enrichment
+    "geotag",
+    "classify-commodity",
+    "classify-region",
+    "nlp-extract-entities",
+    "ocr",
+    "field-normalize",
 ]
 
 # Voyager-internal namespace for activityType URIs.
