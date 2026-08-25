@@ -13,6 +13,7 @@ import pytest
 
 from voyager_prov import (
     EMPTY_REMAP,
+    ActivityType,
     EmitOptions,
     ProvRecord,
     VOYAGER_ACTIVITY_NS,
@@ -99,7 +100,9 @@ def test_emit_stamps_voyager_internal_activity_type_by_default() -> None:
 
 
 def test_emit_swaps_activity_type_when_remap_supplied() -> None:
-    remap = {"chunk": "https://d110.ogc.org/registers/prov-activity/chunk"}
+    remap: dict[ActivityType, str] = {
+        "chunk": "https://d110.ogc.org/registers/prov-activity/chunk"
+    }
     result = emit(base_record(), EmitOptions(remap=remap))
     assert result.solr_doc.prov_activityType == remap["chunk"]
     assert result.jsonld["prov:type"]["@id"] == remap["chunk"]
