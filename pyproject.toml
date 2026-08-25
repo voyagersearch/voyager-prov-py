@@ -29,7 +29,7 @@ voyager-prov = "voyager_prov.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-voyager_prov = ["profile/*.json"]
+voyager_prov = ["profile/*.json", "profile/*.ttl", "py.typed"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
