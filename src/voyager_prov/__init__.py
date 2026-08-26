@@ -14,6 +14,7 @@ from .types import (
     RemapTable,
     SolrProvDoc,
 )
+from .shapes import validate_prov_shapes
 from .validate import (
     ValidationError,
     ValidationResult,
@@ -39,4 +40,5 @@ __all__ = [
     "entity_uri",
     "validate_prov_jsonld",
     "validate_prov_record",
+    "validate_prov_shapes",
 ]
