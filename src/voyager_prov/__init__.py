@@ -2,7 +2,7 @@
 
 from .emit import emit
 from .entity import entity_uri
-from .remap import EMPTY_REMAP, activity_type_uri
+from .remap import DEFAULT_REMAP, EMPTY_REMAP, REGISTER_ENV_VAR, activity_type_uri
 from .types import (
     VOYAGER_ACTIVITY_NS,
     VOYAGER_URN_NS,
@@ -24,7 +24,9 @@ from .validate import (
 
 __all__ = [
     "ActivityType",
+    "DEFAULT_REMAP",
     "EMPTY_REMAP",
+    "REGISTER_ENV_VAR",
     "EmitOptions",
     "EmitResult",
     "ProvJsonLd",
