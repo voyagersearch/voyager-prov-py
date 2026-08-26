@@ -13,6 +13,13 @@ authors = [{ name = "Voyager Search" }]
 
 dependencies = [
   "jsonschema>=4.21",
+  # SHACL gate: shapes + rdflib JSON-LD parser + pyshacl engine. Runs the
+  # W3C SHACL 1.0 constraints in `profile/prov-graph.shapes.ttl` against
+  # each emitted PROV-JSON-LD blob. pyshacl brings owlrl + prettytable
+  # transitively; that's fine since the CLI already runs unconditionally.
+  "pyshacl>=0.29",
+  "rdflib>=7.0",
+  "rdflib-jsonld>=0.6.2 ; python_version < '3.11'",   # jsonld plugin baked into rdflib 7 on 3.11+
 ]
 
 [project.optional-dependencies]
