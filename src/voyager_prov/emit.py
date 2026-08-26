@@ -55,6 +55,8 @@ _ISO_INSTANT_RE = re.compile(
 
 def emit(record: ProvRecord, options: Optional[EmitOptions] = None) -> EmitResult:
     _validate(record)
+    # options.remap wins; otherwise activity_type_uri() falls back to
+    # DEFAULT_REMAP (env-driven at import time).
     remap = options.remap if options is not None else None
     type_uri = activity_type_uri(record.activity_type, remap)
     activity_id = _derive_activity_id(record, type_uri)
