@@ -1,15 +1,27 @@
 {
   "@context": {
-    "voyager": "urn:voyager:prov:",
     "prov": "http://www.w3.org/ns/prov#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "voyager": "urn:voyager:prov:"
   },
   "fasSource": "production-maps",
   "fasSourceName": "Production Maps",
   "hadPrimarySource": {
     "@id": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-    "deckSlides": "23"
+    "deckSlides": "26"
   },
+  "sourceUrl": "https://ipadinternalportal.fas.usda.gov/rssiws/al/global_cropprod.aspx",
+  "externalDeps": [
+    "BeautifulSoup4",
+    "GCP Vision OCR"
+  ],
+  "connectorSteps": [
+    "C1 scrape div.thumb for [commodity, href, region_code]",
+    "C2 map region_code via utils.regions",
+    "C3 download image",
+    "C4 utils.create_image_job \u2192 OCR",
+    "C5 inject fss_commodity_type = [link[0]]"
+  ],
   "activities": [
     {
       "@context": {
@@ -17,91 +29,13 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:539f4de9c71db66e20af9875751627a6",
-      "@type": "prov:Activity",
-      "prov:type": {
-        "@id": "https://voyager.ogc/prov/activity/ocr"
-      },
-      "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:ocr"
-      },
-      "prov:used": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:production-maps"
-        }
-      ],
-      "prov:generated": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps"
-        }
-      ],
-      "prov:startedAtTime": {
-        "@value": "2026-05-01T00:00:00Z",
-        "@type": "xsd:dateTime"
-      },
-      "prov:endedAtTime": {
-        "@value": "2026-05-01T00:00:01Z",
-        "@type": "xsd:dateTime"
-      },
-      "extra": {
-        "declarative": true,
-        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "23",
-        "fasSource": "production-maps"
-      }
-    },
-    {
-      "@context": {
-        "prov": "http://www.w3.org/ns/prov#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "voyager": "urn:voyager:prov:"
-      },
-      "@id": "urn:voyager:prov:activity:4ec5abe79d62686c94b47a23452e3810",
-      "@type": "prov:Activity",
-      "prov:type": {
-        "@id": "https://voyager.ogc/prov/activity/nlp-extract-entities"
-      },
-      "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:nlp-extract-entities"
-      },
-      "prov:used": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:production-maps"
-        }
-      ],
-      "prov:generated": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps"
-        }
-      ],
-      "prov:startedAtTime": {
-        "@value": "2026-05-01T00:00:00Z",
-        "@type": "xsd:dateTime"
-      },
-      "prov:endedAtTime": {
-        "@value": "2026-05-01T00:00:01Z",
-        "@type": "xsd:dateTime"
-      },
-      "extra": {
-        "declarative": true,
-        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "23",
-        "fasSource": "production-maps"
-      }
-    },
-    {
-      "@context": {
-        "prov": "http://www.w3.org/ns/prov#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "voyager": "urn:voyager:prov:"
-      },
-      "@id": "urn:voyager:prov:activity:7e6570201cb95e478607e74e62c90c9a",
+      "@id": "urn:voyager:prov:activity:80df402f928c7b6d159cb3041ae8a35d",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/geotag"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:geotag"
+        "@id": "urn:voyager:agent:fas-upstream:production-maps.geotag"
       },
       "prov:used": [
         {
@@ -110,7 +44,7 @@
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps"
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+geotag"
         }
       ],
       "prov:startedAtTime": {
@@ -124,8 +58,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "23",
-        "fasSource": "production-maps"
+        "deckSlides": "26",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/rssiws/al/global_cropprod.aspx",
+        "fasSource": "production-maps",
+        "chainIndex": 0,
+        "connectorSteps": [
+          "C1 scrape div.thumb for [commodity, href, region_code]",
+          "C2 map region_code via utils.regions",
+          "C3 download image",
+          "C4 utils.create_image_job \u2192 OCR",
+          "C5 inject fss_commodity_type = [link[0]]"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
       }
     },
     {
@@ -134,22 +81,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:a0d25073815b0128773ba64cb5abb2cd",
+      "@id": "urn:voyager:prov:activity:05a4776a8e18a8f09b9094333d8550ff",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-commodity"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-commodity"
+        "@id": "urn:voyager:agent:fas-upstream:production-maps.classify-commodity"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:production-maps"
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+geotag"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps"
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+classify-commodity"
         }
       ],
       "prov:startedAtTime": {
@@ -163,8 +110,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "23",
-        "fasSource": "production-maps"
+        "deckSlides": "26",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/rssiws/al/global_cropprod.aspx",
+        "fasSource": "production-maps",
+        "chainIndex": 1,
+        "connectorSteps": [
+          "C1 scrape div.thumb for [commodity, href, region_code]",
+          "C2 map region_code via utils.regions",
+          "C3 download image",
+          "C4 utils.create_image_job \u2192 OCR",
+          "C5 inject fss_commodity_type = [link[0]]"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
       }
     },
     {
@@ -173,22 +133,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:edef937bdb4cd30995a2f879798fac43",
+      "@id": "urn:voyager:prov:activity:0dfd612a79b3e2a9cb4e5b2e52827250",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-region"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-region"
+        "@id": "urn:voyager:agent:fas-upstream:production-maps.classify-region"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:production-maps"
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+classify-commodity"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps"
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+classify-region"
         }
       ],
       "prov:startedAtTime": {
@@ -202,8 +162,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "23",
-        "fasSource": "production-maps"
+        "deckSlides": "26",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/rssiws/al/global_cropprod.aspx",
+        "fasSource": "production-maps",
+        "chainIndex": 2,
+        "connectorSteps": [
+          "C1 scrape div.thumb for [commodity, href, region_code]",
+          "C2 map region_code via utils.regions",
+          "C3 download image",
+          "C4 utils.create_image_job \u2192 OCR",
+          "C5 inject fss_commodity_type = [link[0]]"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
       }
     },
     {
@@ -212,17 +185,69 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:4bc206aa17059a59118657811b36be7f",
+      "@id": "urn:voyager:prov:activity:16a31cb87d322804da592ba203033679",
+      "@type": "prov:Activity",
+      "prov:type": {
+        "@id": "https://voyager.ogc/prov/activity/ocr"
+      },
+      "prov:wasAssociatedWith": {
+        "@id": "urn:voyager:agent:fas-upstream:production-maps.ocr"
+      },
+      "prov:used": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+classify-region"
+        }
+      ],
+      "prov:generated": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+ocr"
+        }
+      ],
+      "prov:startedAtTime": {
+        "@value": "2026-05-01T00:00:00Z",
+        "@type": "xsd:dateTime"
+      },
+      "prov:endedAtTime": {
+        "@value": "2026-05-01T00:00:01Z",
+        "@type": "xsd:dateTime"
+      },
+      "extra": {
+        "declarative": true,
+        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
+        "deckSlides": "26",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/rssiws/al/global_cropprod.aspx",
+        "fasSource": "production-maps",
+        "chainIndex": 3,
+        "connectorSteps": [
+          "C1 scrape div.thumb for [commodity, href, region_code]",
+          "C2 map region_code via utils.regions",
+          "C3 download image",
+          "C4 utils.create_image_job \u2192 OCR",
+          "C5 inject fss_commodity_type = [link[0]]"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
+      }
+    },
+    {
+      "@context": {
+        "prov": "http://www.w3.org/ns/prov#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "voyager": "urn:voyager:prov:"
+      },
+      "@id": "urn:voyager:prov:activity:702878176d382042551704f040a87e54",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/field-normalize"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:field-normalize"
+        "@id": "urn:voyager:agent:fas-upstream:production-maps.field-normalize"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:production-maps"
+          "@id": "urn:voyager:prov:entity:fas-catalog:production-maps+ocr"
         }
       ],
       "prov:generated": [
@@ -241,8 +266,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "23",
-        "fasSource": "production-maps"
+        "deckSlides": "26",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/rssiws/al/global_cropprod.aspx",
+        "fasSource": "production-maps",
+        "chainIndex": 4,
+        "connectorSteps": [
+          "C1 scrape div.thumb for [commodity, href, region_code]",
+          "C2 map region_code via utils.regions",
+          "C3 download image",
+          "C4 utils.create_image_job \u2192 OCR",
+          "C5 inject fss_commodity_type = [link[0]]"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
       }
     }
   ]

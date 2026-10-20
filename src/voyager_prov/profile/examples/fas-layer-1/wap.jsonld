@@ -1,15 +1,35 @@
 {
   "@context": {
-    "voyager": "urn:voyager:prov:",
     "prov": "http://www.w3.org/ns/prov#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "voyager": "urn:voyager:prov:"
   },
   "fasSource": "wap",
-  "fasSourceName": "World Agriculture Production",
+  "fasSourceName": "World Agricultural Production (WAP)",
   "hadPrimarySource": {
     "@id": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-    "deckSlides": "21"
+    "deckSlides": "22"
   },
+  "sourceUrl": "https://apps.fas.usda.gov/PSDOnline/CircularDownloader.ashx?commodity=production",
+  "externalDeps": [
+    "docx",
+    "docx2txt",
+    "fitz (PyMuPDF)",
+    "GCP Vision OCR",
+    "pycountry",
+    "requests"
+  ],
+  "connectorSteps": [
+    "C1 download monthly PDF (common.download_file)",
+    "C2 locate matching .docx companion",
+    "C3 docx2txt extract text + images",
+    "C4 parse Heading 1/2/3 into per-brief chunks",
+    "C5 regex extract author/phone/email/contact",
+    "C6 country scan against pycountry lookups",
+    "C7 child image jobs via utils.run_image (GCP Vision OCR)",
+    "C8 SequenceMatcher associate images to briefs",
+    "C9 build parent \u2192 article \u2192 image link graph"
+  ],
   "activities": [
     {
       "@context": {
@@ -17,52 +37,13 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:71c6d78d91ac8426c9d118ecce138ea3",
-      "@type": "prov:Activity",
-      "prov:type": {
-        "@id": "https://voyager.ogc/prov/activity/ocr"
-      },
-      "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:ocr"
-      },
-      "prov:used": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:wap"
-        }
-      ],
-      "prov:generated": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-catalog:wap"
-        }
-      ],
-      "prov:startedAtTime": {
-        "@value": "2026-05-01T00:00:00Z",
-        "@type": "xsd:dateTime"
-      },
-      "prov:endedAtTime": {
-        "@value": "2026-05-01T00:00:01Z",
-        "@type": "xsd:dateTime"
-      },
-      "extra": {
-        "declarative": true,
-        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "21",
-        "fasSource": "wap"
-      }
-    },
-    {
-      "@context": {
-        "prov": "http://www.w3.org/ns/prov#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "voyager": "urn:voyager:prov:"
-      },
-      "@id": "urn:voyager:prov:activity:032e7787a1889b5a6d0073f89b7c8156",
+      "@id": "urn:voyager:prov:activity:2b3bbb6042663cd88251719a2665800f",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/nlp-extract-entities"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:nlp-extract-entities"
+        "@id": "urn:voyager:agent:fas-upstream:wap.nlp-extract-entities"
       },
       "prov:used": [
         {
@@ -71,7 +52,7 @@
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:wap"
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+nlp-extract-entities"
         }
       ],
       "prov:startedAtTime": {
@@ -85,8 +66,29 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "21",
-        "fasSource": "wap"
+        "deckSlides": "22",
+        "sourceUrl": "https://apps.fas.usda.gov/PSDOnline/CircularDownloader.ashx?commodity=production",
+        "fasSource": "wap",
+        "chainIndex": 0,
+        "connectorSteps": [
+          "C1 download monthly PDF (common.download_file)",
+          "C2 locate matching .docx companion",
+          "C3 docx2txt extract text + images",
+          "C4 parse Heading 1/2/3 into per-brief chunks",
+          "C5 regex extract author/phone/email/contact",
+          "C6 country scan against pycountry lookups",
+          "C7 child image jobs via utils.run_image (GCP Vision OCR)",
+          "C8 SequenceMatcher associate images to briefs",
+          "C9 build parent \u2192 article \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "docx",
+          "docx2txt",
+          "fitz (PyMuPDF)",
+          "GCP Vision OCR",
+          "pycountry",
+          "requests"
+        ]
       }
     },
     {
@@ -95,22 +97,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:3263e322294d0c9b7a5a42c340c75890",
+      "@id": "urn:voyager:prov:activity:2d8b9205470538b3e747c1871e43e50b",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/geotag"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:geotag"
+        "@id": "urn:voyager:agent:fas-upstream:wap.geotag"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:wap"
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+nlp-extract-entities"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:wap"
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+geotag"
         }
       ],
       "prov:startedAtTime": {
@@ -124,8 +126,29 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "21",
-        "fasSource": "wap"
+        "deckSlides": "22",
+        "sourceUrl": "https://apps.fas.usda.gov/PSDOnline/CircularDownloader.ashx?commodity=production",
+        "fasSource": "wap",
+        "chainIndex": 1,
+        "connectorSteps": [
+          "C1 download monthly PDF (common.download_file)",
+          "C2 locate matching .docx companion",
+          "C3 docx2txt extract text + images",
+          "C4 parse Heading 1/2/3 into per-brief chunks",
+          "C5 regex extract author/phone/email/contact",
+          "C6 country scan against pycountry lookups",
+          "C7 child image jobs via utils.run_image (GCP Vision OCR)",
+          "C8 SequenceMatcher associate images to briefs",
+          "C9 build parent \u2192 article \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "docx",
+          "docx2txt",
+          "fitz (PyMuPDF)",
+          "GCP Vision OCR",
+          "pycountry",
+          "requests"
+        ]
       }
     },
     {
@@ -134,22 +157,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:28320760b505ca43ff3b4dfd38b625c5",
+      "@id": "urn:voyager:prov:activity:de19cd016500b4a9a9ff62ae9d7be970",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-commodity"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-commodity"
+        "@id": "urn:voyager:agent:fas-upstream:wap.classify-commodity"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:wap"
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+geotag"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:wap"
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+classify-commodity"
         }
       ],
       "prov:startedAtTime": {
@@ -163,8 +186,29 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "21",
-        "fasSource": "wap"
+        "deckSlides": "22",
+        "sourceUrl": "https://apps.fas.usda.gov/PSDOnline/CircularDownloader.ashx?commodity=production",
+        "fasSource": "wap",
+        "chainIndex": 2,
+        "connectorSteps": [
+          "C1 download monthly PDF (common.download_file)",
+          "C2 locate matching .docx companion",
+          "C3 docx2txt extract text + images",
+          "C4 parse Heading 1/2/3 into per-brief chunks",
+          "C5 regex extract author/phone/email/contact",
+          "C6 country scan against pycountry lookups",
+          "C7 child image jobs via utils.run_image (GCP Vision OCR)",
+          "C8 SequenceMatcher associate images to briefs",
+          "C9 build parent \u2192 article \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "docx",
+          "docx2txt",
+          "fitz (PyMuPDF)",
+          "GCP Vision OCR",
+          "pycountry",
+          "requests"
+        ]
       }
     },
     {
@@ -173,17 +217,77 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:3348d772db068d81a9832ef5fa911b07",
+      "@id": "urn:voyager:prov:activity:8711474ddbc74dd489375e980dec8806",
+      "@type": "prov:Activity",
+      "prov:type": {
+        "@id": "https://voyager.ogc/prov/activity/ocr"
+      },
+      "prov:wasAssociatedWith": {
+        "@id": "urn:voyager:agent:fas-upstream:wap.ocr"
+      },
+      "prov:used": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+classify-commodity"
+        }
+      ],
+      "prov:generated": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+ocr"
+        }
+      ],
+      "prov:startedAtTime": {
+        "@value": "2026-05-01T00:00:00Z",
+        "@type": "xsd:dateTime"
+      },
+      "prov:endedAtTime": {
+        "@value": "2026-05-01T00:00:01Z",
+        "@type": "xsd:dateTime"
+      },
+      "extra": {
+        "declarative": true,
+        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
+        "deckSlides": "22",
+        "sourceUrl": "https://apps.fas.usda.gov/PSDOnline/CircularDownloader.ashx?commodity=production",
+        "fasSource": "wap",
+        "chainIndex": 3,
+        "connectorSteps": [
+          "C1 download monthly PDF (common.download_file)",
+          "C2 locate matching .docx companion",
+          "C3 docx2txt extract text + images",
+          "C4 parse Heading 1/2/3 into per-brief chunks",
+          "C5 regex extract author/phone/email/contact",
+          "C6 country scan against pycountry lookups",
+          "C7 child image jobs via utils.run_image (GCP Vision OCR)",
+          "C8 SequenceMatcher associate images to briefs",
+          "C9 build parent \u2192 article \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "docx",
+          "docx2txt",
+          "fitz (PyMuPDF)",
+          "GCP Vision OCR",
+          "pycountry",
+          "requests"
+        ]
+      }
+    },
+    {
+      "@context": {
+        "prov": "http://www.w3.org/ns/prov#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "voyager": "urn:voyager:prov:"
+      },
+      "@id": "urn:voyager:prov:activity:fed849c6ea7fc493930995f7fa9d2834",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/field-normalize"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:field-normalize"
+        "@id": "urn:voyager:agent:fas-upstream:wap.field-normalize"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:wap"
+          "@id": "urn:voyager:prov:entity:fas-catalog:wap+ocr"
         }
       ],
       "prov:generated": [
@@ -202,8 +306,29 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "21",
-        "fasSource": "wap"
+        "deckSlides": "22",
+        "sourceUrl": "https://apps.fas.usda.gov/PSDOnline/CircularDownloader.ashx?commodity=production",
+        "fasSource": "wap",
+        "chainIndex": 4,
+        "connectorSteps": [
+          "C1 download monthly PDF (common.download_file)",
+          "C2 locate matching .docx companion",
+          "C3 docx2txt extract text + images",
+          "C4 parse Heading 1/2/3 into per-brief chunks",
+          "C5 regex extract author/phone/email/contact",
+          "C6 country scan against pycountry lookups",
+          "C7 child image jobs via utils.run_image (GCP Vision OCR)",
+          "C8 SequenceMatcher associate images to briefs",
+          "C9 build parent \u2192 article \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "docx",
+          "docx2txt",
+          "fitz (PyMuPDF)",
+          "GCP Vision OCR",
+          "pycountry",
+          "requests"
+        ]
       }
     }
   ]
