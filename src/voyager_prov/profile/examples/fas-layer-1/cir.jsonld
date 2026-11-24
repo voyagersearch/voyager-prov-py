@@ -1,15 +1,34 @@
 {
   "@context": {
-    "voyager": "urn:voyager:prov:",
     "prov": "http://www.w3.org/ns/prov#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "voyager": "urn:voyager:prov:"
   },
   "fasSource": "cir",
-  "fasSourceName": "Commodity Intelligence Reports",
+  "fasSourceName": "Commodity Intelligence Reports (CIR)",
   "hadPrimarySource": {
     "@id": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-    "deckSlides": "20"
+    "deckSlides": "20-21"
   },
+  "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ipad_home/search.aspx",
+  "externalDeps": [
+    "BeautifulSoup4",
+    "requests",
+    "GCP Vision OCR",
+    "poppler-utils",
+    "fitz (PyMuPDF)"
+  ],
+  "connectorSteps": [
+    "C1 ASP.NET form POST enumerate CIR article links (__VIEWSTATE/__EVENTVALIDATION, ArchYear)",
+    "C2 delta via utils.get_repo_ids",
+    "C3 branch PDF \u2192 utils.parse_pdf(isCir=True) + OCR each page",
+    "C4 branch HTM \u2192 utils.parse_htm (BS4 text + images)",
+    "C5 release-date derivation from URL /highlights/YYYY/MM/ or in-text month regex",
+    "C6 title regex from <b>Commodity Intelligence Report ...</b>",
+    "C7 country scan (utils.countries + official_countries), minus 'United States Department of Agriculture'",
+    "C8 image OCR child jobs (format_category='OCR Image')",
+    "C9 build parent \u2192 image link graph"
+  ],
   "activities": [
     {
       "@context": {
@@ -17,52 +36,13 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:d9603cc660dcf895b8187af58e7557c8",
-      "@type": "prov:Activity",
-      "prov:type": {
-        "@id": "https://voyager.ogc/prov/activity/ocr"
-      },
-      "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:ocr"
-      },
-      "prov:used": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:cir"
-        }
-      ],
-      "prov:generated": [
-        {
-          "@id": "urn:voyager:prov:entity:fas-catalog:cir"
-        }
-      ],
-      "prov:startedAtTime": {
-        "@value": "2026-05-01T00:00:00Z",
-        "@type": "xsd:dateTime"
-      },
-      "prov:endedAtTime": {
-        "@value": "2026-05-01T00:00:01Z",
-        "@type": "xsd:dateTime"
-      },
-      "extra": {
-        "declarative": true,
-        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "20",
-        "fasSource": "cir"
-      }
-    },
-    {
-      "@context": {
-        "prov": "http://www.w3.org/ns/prov#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "voyager": "urn:voyager:prov:"
-      },
-      "@id": "urn:voyager:prov:activity:5f058526a566637def3187477a46c3d1",
+      "@id": "urn:voyager:prov:activity:7aa3beeaf94828f2f2149d9702f2e367",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/nlp-extract-entities"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:nlp-extract-entities"
+        "@id": "urn:voyager:agent:fas-upstream:cir.nlp-extract-entities"
       },
       "prov:used": [
         {
@@ -71,7 +51,7 @@
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:cir"
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+nlp-extract-entities"
         }
       ],
       "prov:startedAtTime": {
@@ -85,8 +65,28 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "20",
-        "fasSource": "cir"
+        "deckSlides": "20-21",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ipad_home/search.aspx",
+        "fasSource": "cir",
+        "chainIndex": 0,
+        "connectorSteps": [
+          "C1 ASP.NET form POST enumerate CIR article links (__VIEWSTATE/__EVENTVALIDATION, ArchYear)",
+          "C2 delta via utils.get_repo_ids",
+          "C3 branch PDF \u2192 utils.parse_pdf(isCir=True) + OCR each page",
+          "C4 branch HTM \u2192 utils.parse_htm (BS4 text + images)",
+          "C5 release-date derivation from URL /highlights/YYYY/MM/ or in-text month regex",
+          "C6 title regex from <b>Commodity Intelligence Report ...</b>",
+          "C7 country scan (utils.countries + official_countries), minus 'United States Department of Agriculture'",
+          "C8 image OCR child jobs (format_category='OCR Image')",
+          "C9 build parent \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests",
+          "GCP Vision OCR",
+          "poppler-utils",
+          "fitz (PyMuPDF)"
+        ]
       }
     },
     {
@@ -95,22 +95,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:5b085b27598c2ebdeb0f90809605bcf9",
+      "@id": "urn:voyager:prov:activity:c9e2a115a2e04e48a54171a56f7d9a6c",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/geotag"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:geotag"
+        "@id": "urn:voyager:agent:fas-upstream:cir.geotag"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:cir"
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+nlp-extract-entities"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:cir"
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+geotag"
         }
       ],
       "prov:startedAtTime": {
@@ -124,8 +124,28 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "20",
-        "fasSource": "cir"
+        "deckSlides": "20-21",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ipad_home/search.aspx",
+        "fasSource": "cir",
+        "chainIndex": 1,
+        "connectorSteps": [
+          "C1 ASP.NET form POST enumerate CIR article links (__VIEWSTATE/__EVENTVALIDATION, ArchYear)",
+          "C2 delta via utils.get_repo_ids",
+          "C3 branch PDF \u2192 utils.parse_pdf(isCir=True) + OCR each page",
+          "C4 branch HTM \u2192 utils.parse_htm (BS4 text + images)",
+          "C5 release-date derivation from URL /highlights/YYYY/MM/ or in-text month regex",
+          "C6 title regex from <b>Commodity Intelligence Report ...</b>",
+          "C7 country scan (utils.countries + official_countries), minus 'United States Department of Agriculture'",
+          "C8 image OCR child jobs (format_category='OCR Image')",
+          "C9 build parent \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests",
+          "GCP Vision OCR",
+          "poppler-utils",
+          "fitz (PyMuPDF)"
+        ]
       }
     },
     {
@@ -134,22 +154,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:e324d4bc2830996d81c376df1be4fa21",
+      "@id": "urn:voyager:prov:activity:2aaabdab32424d75d6426685a81fee2c",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-commodity"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-commodity"
+        "@id": "urn:voyager:agent:fas-upstream:cir.classify-commodity"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:cir"
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+geotag"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:cir"
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+classify-commodity"
         }
       ],
       "prov:startedAtTime": {
@@ -163,8 +183,28 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "20",
-        "fasSource": "cir"
+        "deckSlides": "20-21",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ipad_home/search.aspx",
+        "fasSource": "cir",
+        "chainIndex": 2,
+        "connectorSteps": [
+          "C1 ASP.NET form POST enumerate CIR article links (__VIEWSTATE/__EVENTVALIDATION, ArchYear)",
+          "C2 delta via utils.get_repo_ids",
+          "C3 branch PDF \u2192 utils.parse_pdf(isCir=True) + OCR each page",
+          "C4 branch HTM \u2192 utils.parse_htm (BS4 text + images)",
+          "C5 release-date derivation from URL /highlights/YYYY/MM/ or in-text month regex",
+          "C6 title regex from <b>Commodity Intelligence Report ...</b>",
+          "C7 country scan (utils.countries + official_countries), minus 'United States Department of Agriculture'",
+          "C8 image OCR child jobs (format_category='OCR Image')",
+          "C9 build parent \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests",
+          "GCP Vision OCR",
+          "poppler-utils",
+          "fitz (PyMuPDF)"
+        ]
       }
     },
     {
@@ -173,17 +213,76 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:fe171a0121e917a2e67193311fc950dc",
+      "@id": "urn:voyager:prov:activity:ae64538e216ef6f58d7ca9420c5c6ff8",
+      "@type": "prov:Activity",
+      "prov:type": {
+        "@id": "https://voyager.ogc/prov/activity/ocr"
+      },
+      "prov:wasAssociatedWith": {
+        "@id": "urn:voyager:agent:fas-upstream:cir.ocr"
+      },
+      "prov:used": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+classify-commodity"
+        }
+      ],
+      "prov:generated": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+ocr"
+        }
+      ],
+      "prov:startedAtTime": {
+        "@value": "2026-05-01T00:00:00Z",
+        "@type": "xsd:dateTime"
+      },
+      "prov:endedAtTime": {
+        "@value": "2026-05-01T00:00:01Z",
+        "@type": "xsd:dateTime"
+      },
+      "extra": {
+        "declarative": true,
+        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
+        "deckSlides": "20-21",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ipad_home/search.aspx",
+        "fasSource": "cir",
+        "chainIndex": 3,
+        "connectorSteps": [
+          "C1 ASP.NET form POST enumerate CIR article links (__VIEWSTATE/__EVENTVALIDATION, ArchYear)",
+          "C2 delta via utils.get_repo_ids",
+          "C3 branch PDF \u2192 utils.parse_pdf(isCir=True) + OCR each page",
+          "C4 branch HTM \u2192 utils.parse_htm (BS4 text + images)",
+          "C5 release-date derivation from URL /highlights/YYYY/MM/ or in-text month regex",
+          "C6 title regex from <b>Commodity Intelligence Report ...</b>",
+          "C7 country scan (utils.countries + official_countries), minus 'United States Department of Agriculture'",
+          "C8 image OCR child jobs (format_category='OCR Image')",
+          "C9 build parent \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests",
+          "GCP Vision OCR",
+          "poppler-utils",
+          "fitz (PyMuPDF)"
+        ]
+      }
+    },
+    {
+      "@context": {
+        "prov": "http://www.w3.org/ns/prov#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "voyager": "urn:voyager:prov:"
+      },
+      "@id": "urn:voyager:prov:activity:1f7e49dff2b2152ea85a969fc5b78460",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/field-normalize"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:field-normalize"
+        "@id": "urn:voyager:agent:fas-upstream:cir.field-normalize"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:cir"
+          "@id": "urn:voyager:prov:entity:fas-catalog:cir+ocr"
         }
       ],
       "prov:generated": [
@@ -202,8 +301,28 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "20",
-        "fasSource": "cir"
+        "deckSlides": "20-21",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ipad_home/search.aspx",
+        "fasSource": "cir",
+        "chainIndex": 4,
+        "connectorSteps": [
+          "C1 ASP.NET form POST enumerate CIR article links (__VIEWSTATE/__EVENTVALIDATION, ArchYear)",
+          "C2 delta via utils.get_repo_ids",
+          "C3 branch PDF \u2192 utils.parse_pdf(isCir=True) + OCR each page",
+          "C4 branch HTM \u2192 utils.parse_htm (BS4 text + images)",
+          "C5 release-date derivation from URL /highlights/YYYY/MM/ or in-text month regex",
+          "C6 title regex from <b>Commodity Intelligence Report ...</b>",
+          "C7 country scan (utils.countries + official_countries), minus 'United States Department of Agriculture'",
+          "C8 image OCR child jobs (format_category='OCR Image')",
+          "C9 build parent \u2192 image link graph"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests",
+          "GCP Vision OCR",
+          "poppler-utils",
+          "fitz (PyMuPDF)"
+        ]
       }
     }
   ]

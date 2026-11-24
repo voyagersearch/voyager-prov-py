@@ -39,7 +39,9 @@ EXPECTED_ACTIVITY_TYPES = {
 def test_bundle_directory_is_populated() -> None:
     assert BUNDLES, f"no FAS Layer 1 bundles under {EXAMPLES_DIR}"
     # One file per FAS source in the deck's source table.
-    assert len(BUNDLES) == 9, f"expected 9 source bundles, found {len(BUNDLES)}"
+    # 14 FAS custom-connector-derived assertions + 2 legacy (gadas-services, kcna-cifs)
+    # See fas-layer-1/README.md for the inventory.
+    assert len(BUNDLES) == 16, f"expected 16 source bundles, found {len(BUNDLES)}"
 
 
 @pytest.mark.parametrize("bundle_path", BUNDLES, ids=lambda p: p.stem)

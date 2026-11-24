@@ -1,15 +1,28 @@
 {
   "@context": {
-    "voyager": "urn:voyager:prov:",
     "prov": "http://www.w3.org/ns/prov#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "voyager": "urn:voyager:prov:"
   },
   "fasSource": "gain",
-  "fasSourceName": "Global Agriculture Information Network",
+  "fasSourceName": "GAIN (Global Agricultural Information Network)",
   "hadPrimarySource": {
     "@id": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-    "deckSlides": "22"
+    "deckSlides": "23"
   },
+  "sourceUrl": "https://apps.fas.usda.gov/newgainapi/Search/GetSearchResults",
+  "externalDeps": [
+    "USDA newgain OAuth API",
+    "requests"
+  ],
+  "connectorSteps": [
+    "C1 OAuth client_credentials POST /newgainapi/token \u2192 bearer",
+    "C2 POST /Search/GetSearchResults with all categoryIds (25-day sliding window)",
+    "C3 per-report build download href via DownloadReportByFileName + urlencode",
+    "C4 delta via utils.get_repo_ids",
+    "C5 country map via utils.countries (China \u2192 China special-case)",
+    "C6 reportCategory \u2192 in-file 13-bucket gain_categories taxonomy (default Food_Sector) \u2192 fs_gain_category"
+  ],
   "activities": [
     {
       "@context": {
@@ -17,13 +30,13 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:3722ebc5d0f139354248ad209f509367",
+      "@id": "urn:voyager:prov:activity:9f4f27223ef4e9a8e6a2bd68fb0fc167",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/nlp-extract-entities"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:nlp-extract-entities"
+        "@id": "urn:voyager:agent:fas-upstream:gain.nlp-extract-entities"
       },
       "prov:used": [
         {
@@ -32,7 +45,7 @@
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:gain"
+          "@id": "urn:voyager:prov:entity:fas-catalog:gain+nlp-extract-entities"
         }
       ],
       "prov:startedAtTime": {
@@ -46,8 +59,22 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "22",
-        "fasSource": "gain"
+        "deckSlides": "23",
+        "sourceUrl": "https://apps.fas.usda.gov/newgainapi/Search/GetSearchResults",
+        "fasSource": "gain",
+        "chainIndex": 0,
+        "connectorSteps": [
+          "C1 OAuth client_credentials POST /newgainapi/token \u2192 bearer",
+          "C2 POST /Search/GetSearchResults with all categoryIds (25-day sliding window)",
+          "C3 per-report build download href via DownloadReportByFileName + urlencode",
+          "C4 delta via utils.get_repo_ids",
+          "C5 country map via utils.countries (China \u2192 China special-case)",
+          "C6 reportCategory \u2192 in-file 13-bucket gain_categories taxonomy (default Food_Sector) \u2192 fs_gain_category"
+        ],
+        "externalDeps": [
+          "USDA newgain OAuth API",
+          "requests"
+        ]
       }
     },
     {
@@ -56,22 +83,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:9213f9fc72fb012f7719db4b0017ef7d",
+      "@id": "urn:voyager:prov:activity:415dd4ca4d16eea8f55cbd925623b734",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/geotag"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:geotag"
+        "@id": "urn:voyager:agent:fas-upstream:gain.geotag"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:gain"
+          "@id": "urn:voyager:prov:entity:fas-catalog:gain+nlp-extract-entities"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:gain"
+          "@id": "urn:voyager:prov:entity:fas-catalog:gain+geotag"
         }
       ],
       "prov:startedAtTime": {
@@ -85,8 +112,22 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "22",
-        "fasSource": "gain"
+        "deckSlides": "23",
+        "sourceUrl": "https://apps.fas.usda.gov/newgainapi/Search/GetSearchResults",
+        "fasSource": "gain",
+        "chainIndex": 1,
+        "connectorSteps": [
+          "C1 OAuth client_credentials POST /newgainapi/token \u2192 bearer",
+          "C2 POST /Search/GetSearchResults with all categoryIds (25-day sliding window)",
+          "C3 per-report build download href via DownloadReportByFileName + urlencode",
+          "C4 delta via utils.get_repo_ids",
+          "C5 country map via utils.countries (China \u2192 China special-case)",
+          "C6 reportCategory \u2192 in-file 13-bucket gain_categories taxonomy (default Food_Sector) \u2192 fs_gain_category"
+        ],
+        "externalDeps": [
+          "USDA newgain OAuth API",
+          "requests"
+        ]
       }
     },
     {
@@ -95,22 +136,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:b71b85807cb60f068446deeaea7822d3",
+      "@id": "urn:voyager:prov:activity:a30a5587738c09546ae72ab458f1deaa",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-commodity"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-commodity"
+        "@id": "urn:voyager:agent:fas-upstream:gain.classify-commodity"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:gain"
+          "@id": "urn:voyager:prov:entity:fas-catalog:gain+geotag"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:gain"
+          "@id": "urn:voyager:prov:entity:fas-catalog:gain+classify-commodity"
         }
       ],
       "prov:startedAtTime": {
@@ -124,8 +165,22 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "22",
-        "fasSource": "gain"
+        "deckSlides": "23",
+        "sourceUrl": "https://apps.fas.usda.gov/newgainapi/Search/GetSearchResults",
+        "fasSource": "gain",
+        "chainIndex": 2,
+        "connectorSteps": [
+          "C1 OAuth client_credentials POST /newgainapi/token \u2192 bearer",
+          "C2 POST /Search/GetSearchResults with all categoryIds (25-day sliding window)",
+          "C3 per-report build download href via DownloadReportByFileName + urlencode",
+          "C4 delta via utils.get_repo_ids",
+          "C5 country map via utils.countries (China \u2192 China special-case)",
+          "C6 reportCategory \u2192 in-file 13-bucket gain_categories taxonomy (default Food_Sector) \u2192 fs_gain_category"
+        ],
+        "externalDeps": [
+          "USDA newgain OAuth API",
+          "requests"
+        ]
       }
     },
     {
@@ -134,17 +189,17 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:5b08e083b4eda8111b7a7ecf3505eabe",
+      "@id": "urn:voyager:prov:activity:b0731f2a605287793d64a447ea758309",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/field-normalize"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:field-normalize"
+        "@id": "urn:voyager:agent:fas-upstream:gain.field-normalize"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:gain"
+          "@id": "urn:voyager:prov:entity:fas-catalog:gain+classify-commodity"
         }
       ],
       "prov:generated": [
@@ -163,8 +218,22 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "22",
-        "fasSource": "gain"
+        "deckSlides": "23",
+        "sourceUrl": "https://apps.fas.usda.gov/newgainapi/Search/GetSearchResults",
+        "fasSource": "gain",
+        "chainIndex": 3,
+        "connectorSteps": [
+          "C1 OAuth client_credentials POST /newgainapi/token \u2192 bearer",
+          "C2 POST /Search/GetSearchResults with all categoryIds (25-day sliding window)",
+          "C3 per-report build download href via DownloadReportByFileName + urlencode",
+          "C4 delta via utils.get_repo_ids",
+          "C5 country map via utils.countries (China \u2192 China special-case)",
+          "C6 reportCategory \u2192 in-file 13-bucket gain_categories taxonomy (default Food_Sector) \u2192 fs_gain_category"
+        ],
+        "externalDeps": [
+          "USDA newgain OAuth API",
+          "requests"
+        ]
       }
     }
   ]

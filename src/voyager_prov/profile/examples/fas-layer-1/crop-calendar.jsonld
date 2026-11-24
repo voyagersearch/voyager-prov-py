@@ -1,15 +1,26 @@
 {
   "@context": {
-    "voyager": "urn:voyager:prov:",
     "prov": "http://www.w3.org/ns/prov#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "voyager": "urn:voyager:prov:"
   },
   "fasSource": "crop-calendar",
   "fasSourceName": "Crop Calendar",
   "hadPrimarySource": {
     "@id": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-    "deckSlides": "26"
+    "deckSlides": "27"
   },
+  "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ogamaps/cropcalendar.aspx",
+  "externalDeps": [
+    "BeautifulSoup4",
+    "GCP Vision OCR"
+  ],
+  "connectorSteps": [
+    "C1 BS4 tab-page enumeration",
+    "C2 collect <img src> per calendar page",
+    "C3 utils.download_file each image",
+    "C4 utils.create_image_job \u2192 OCR via utils.run_image (GCP Vision)"
+  ],
   "activities": [
     {
       "@context": {
@@ -17,13 +28,13 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:8d7f09d39ba7c8bacec0f00b9bc1b59d",
+      "@id": "urn:voyager:prov:activity:03ff7bc3dd96b074e8e9c836beacaea3",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/geotag"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:geotag"
+        "@id": "urn:voyager:agent:fas-upstream:crop-calendar.geotag"
       },
       "prov:used": [
         {
@@ -32,7 +43,7 @@
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar"
+          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar+geotag"
         }
       ],
       "prov:startedAtTime": {
@@ -46,8 +57,20 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "26",
-        "fasSource": "crop-calendar"
+        "deckSlides": "27",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ogamaps/cropcalendar.aspx",
+        "fasSource": "crop-calendar",
+        "chainIndex": 0,
+        "connectorSteps": [
+          "C1 BS4 tab-page enumeration",
+          "C2 collect <img src> per calendar page",
+          "C3 utils.download_file each image",
+          "C4 utils.create_image_job \u2192 OCR via utils.run_image (GCP Vision)"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
       }
     },
     {
@@ -56,22 +79,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:297eec27a4a8cb08d99d30fb0442116b",
+      "@id": "urn:voyager:prov:activity:8bfd007b200038f0d8bd8e434dfd1a4e",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-commodity"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-commodity"
+        "@id": "urn:voyager:agent:fas-upstream:crop-calendar.classify-commodity"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:crop-calendar"
+          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar+geotag"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar"
+          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar+classify-commodity"
         }
       ],
       "prov:startedAtTime": {
@@ -85,8 +108,20 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "26",
-        "fasSource": "crop-calendar"
+        "deckSlides": "27",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ogamaps/cropcalendar.aspx",
+        "fasSource": "crop-calendar",
+        "chainIndex": 1,
+        "connectorSteps": [
+          "C1 BS4 tab-page enumeration",
+          "C2 collect <img src> per calendar page",
+          "C3 utils.download_file each image",
+          "C4 utils.create_image_job \u2192 OCR via utils.run_image (GCP Vision)"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
       }
     },
     {
@@ -95,17 +130,68 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:3c1d7d7c372018c8ef441288d08de951",
+      "@id": "urn:voyager:prov:activity:2cd48d50193f8210900b7d05309f923c",
+      "@type": "prov:Activity",
+      "prov:type": {
+        "@id": "https://voyager.ogc/prov/activity/ocr"
+      },
+      "prov:wasAssociatedWith": {
+        "@id": "urn:voyager:agent:fas-upstream:crop-calendar.ocr"
+      },
+      "prov:used": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar+classify-commodity"
+        }
+      ],
+      "prov:generated": [
+        {
+          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar+ocr"
+        }
+      ],
+      "prov:startedAtTime": {
+        "@value": "2026-05-01T00:00:00Z",
+        "@type": "xsd:dateTime"
+      },
+      "prov:endedAtTime": {
+        "@value": "2026-05-01T00:00:01Z",
+        "@type": "xsd:dateTime"
+      },
+      "extra": {
+        "declarative": true,
+        "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
+        "deckSlides": "27",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ogamaps/cropcalendar.aspx",
+        "fasSource": "crop-calendar",
+        "chainIndex": 2,
+        "connectorSteps": [
+          "C1 BS4 tab-page enumeration",
+          "C2 collect <img src> per calendar page",
+          "C3 utils.download_file each image",
+          "C4 utils.create_image_job \u2192 OCR via utils.run_image (GCP Vision)"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
+      }
+    },
+    {
+      "@context": {
+        "prov": "http://www.w3.org/ns/prov#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "voyager": "urn:voyager:prov:"
+      },
+      "@id": "urn:voyager:prov:activity:6c38ca2a46e95272501ff8fdfad8b995",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/field-normalize"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:field-normalize"
+        "@id": "urn:voyager:agent:fas-upstream:crop-calendar.field-normalize"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:crop-calendar"
+          "@id": "urn:voyager:prov:entity:fas-catalog:crop-calendar+ocr"
         }
       ],
       "prov:generated": [
@@ -124,8 +210,20 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "26",
-        "fasSource": "crop-calendar"
+        "deckSlides": "27",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/ogamaps/cropcalendar.aspx",
+        "fasSource": "crop-calendar",
+        "chainIndex": 3,
+        "connectorSteps": [
+          "C1 BS4 tab-page enumeration",
+          "C2 collect <img src> per calendar page",
+          "C3 utils.download_file each image",
+          "C4 utils.create_image_job \u2192 OCR via utils.run_image (GCP Vision)"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "GCP Vision OCR"
+        ]
       }
     }
   ]

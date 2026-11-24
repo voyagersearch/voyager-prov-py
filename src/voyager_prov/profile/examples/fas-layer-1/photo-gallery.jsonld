@@ -1,15 +1,27 @@
 {
   "@context": {
-    "voyager": "urn:voyager:prov:",
     "prov": "http://www.w3.org/ns/prov#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "voyager": "urn:voyager:prov:"
   },
   "fasSource": "photo-gallery",
-  "fasSourceName": "Photo Gallery",
+  "fasSourceName": "PSD Photo Gallery",
   "hadPrimarySource": {
     "@id": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-    "deckSlides": "25"
+    "deckSlides": "28"
   },
+  "sourceUrl": "https://ipadinternalportal.fas.usda.gov/photo_gallery/GetData.ashx?category=Regions",
+  "externalDeps": [
+    "BeautifulSoup4",
+    "requests"
+  ],
+  "connectorSteps": [
+    "C1 enumerate region select options",
+    "C2 crawl paged thumbnail tables + Next pages",
+    "C3 fetch photo detail page (displayDescription, 'Photo by' credit, metadata table: image title / crop / city / province / country / lat / lon / elevation / date-time)",
+    "C4 download full image",
+    "C5 build POINT geometry from lat/lon"
+  ],
   "activities": [
     {
       "@context": {
@@ -17,13 +29,13 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:bec426304685b270de0469d9205dfffd",
+      "@id": "urn:voyager:prov:activity:f343e854618875367e48030fb568728e",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/ocr"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:ocr"
+        "@id": "urn:voyager:agent:fas-upstream:photo-gallery.ocr"
       },
       "prov:used": [
         {
@@ -32,7 +44,7 @@
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery"
+          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery+ocr"
         }
       ],
       "prov:startedAtTime": {
@@ -46,8 +58,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "25",
-        "fasSource": "photo-gallery"
+        "deckSlides": "28",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/photo_gallery/GetData.ashx?category=Regions",
+        "fasSource": "photo-gallery",
+        "chainIndex": 0,
+        "connectorSteps": [
+          "C1 enumerate region select options",
+          "C2 crawl paged thumbnail tables + Next pages",
+          "C3 fetch photo detail page (displayDescription, 'Photo by' credit, metadata table: image title / crop / city / province / country / lat / lon / elevation / date-time)",
+          "C4 download full image",
+          "C5 build POINT geometry from lat/lon"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests"
+        ]
       }
     },
     {
@@ -56,22 +81,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:d602688185e401a4a28928acfad096ab",
+      "@id": "urn:voyager:prov:activity:f0e4d510480a5d89405ff852f204077c",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/geotag"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:geotag"
+        "@id": "urn:voyager:agent:fas-upstream:photo-gallery.geotag"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:photo-gallery"
+          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery+ocr"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery"
+          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery+geotag"
         }
       ],
       "prov:startedAtTime": {
@@ -85,8 +110,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "25",
-        "fasSource": "photo-gallery"
+        "deckSlides": "28",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/photo_gallery/GetData.ashx?category=Regions",
+        "fasSource": "photo-gallery",
+        "chainIndex": 1,
+        "connectorSteps": [
+          "C1 enumerate region select options",
+          "C2 crawl paged thumbnail tables + Next pages",
+          "C3 fetch photo detail page (displayDescription, 'Photo by' credit, metadata table: image title / crop / city / province / country / lat / lon / elevation / date-time)",
+          "C4 download full image",
+          "C5 build POINT geometry from lat/lon"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests"
+        ]
       }
     },
     {
@@ -95,22 +133,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:363a586eb224ad777fdda330472db51c",
+      "@id": "urn:voyager:prov:activity:0b3c7f8872f89dcbabbf80cf82c8198f",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-commodity"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-commodity"
+        "@id": "urn:voyager:agent:fas-upstream:photo-gallery.classify-commodity"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:photo-gallery"
+          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery+geotag"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery"
+          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery+classify-commodity"
         }
       ],
       "prov:startedAtTime": {
@@ -124,8 +162,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "25",
-        "fasSource": "photo-gallery"
+        "deckSlides": "28",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/photo_gallery/GetData.ashx?category=Regions",
+        "fasSource": "photo-gallery",
+        "chainIndex": 2,
+        "connectorSteps": [
+          "C1 enumerate region select options",
+          "C2 crawl paged thumbnail tables + Next pages",
+          "C3 fetch photo detail page (displayDescription, 'Photo by' credit, metadata table: image title / crop / city / province / country / lat / lon / elevation / date-time)",
+          "C4 download full image",
+          "C5 build POINT geometry from lat/lon"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests"
+        ]
       }
     },
     {
@@ -134,17 +185,17 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:99f0c8553baf5cfa7c8bc01e6704b366",
+      "@id": "urn:voyager:prov:activity:0381dc0f18272210a2e4c9887797772f",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/field-normalize"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:field-normalize"
+        "@id": "urn:voyager:agent:fas-upstream:photo-gallery.field-normalize"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:photo-gallery"
+          "@id": "urn:voyager:prov:entity:fas-catalog:photo-gallery+classify-commodity"
         }
       ],
       "prov:generated": [
@@ -163,8 +214,21 @@
       "extra": {
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
-        "deckSlides": "25",
-        "fasSource": "photo-gallery"
+        "deckSlides": "28",
+        "sourceUrl": "https://ipadinternalportal.fas.usda.gov/photo_gallery/GetData.ashx?category=Regions",
+        "fasSource": "photo-gallery",
+        "chainIndex": 3,
+        "connectorSteps": [
+          "C1 enumerate region select options",
+          "C2 crawl paged thumbnail tables + Next pages",
+          "C3 fetch photo detail page (displayDescription, 'Photo by' credit, metadata table: image title / crop / city / province / country / lat / lon / elevation / date-time)",
+          "C4 download full image",
+          "C5 build POINT geometry from lat/lon"
+        ],
+        "externalDeps": [
+          "BeautifulSoup4",
+          "requests"
+        ]
       }
     }
   ]

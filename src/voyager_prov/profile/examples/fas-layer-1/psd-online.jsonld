@@ -1,8 +1,8 @@
 {
   "@context": {
-    "voyager": "urn:voyager:prov:",
     "prov": "http://www.w3.org/ns/prov#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "voyager": "urn:voyager:prov:"
   },
   "fasSource": "psd-online",
   "fasSourceName": "PSD Online / Publications",
@@ -10,6 +10,20 @@
     "@id": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
     "deckSlides": "24"
   },
+  "sourceUrl": "https://api.fas.usda.gov/api/psd/commodity/{code}/country/all/year/{year}",
+  "externalDeps": [
+    "USDA PSD API",
+    "Voyager placefinder Solr"
+  ],
+  "connectorSteps": [
+    "C1 HTTP GET commodities list",
+    "C2 HTTP GET per-commodity/per-year rows",
+    "C3 delta-check via Solr fi_release_year desc",
+    "C4 per-country row expansion",
+    "C5 unit/attribute/country code lookup (in-file dicts)",
+    "C6 placefinder geo lookup (cached)",
+    "C7 id synthesis (country_commodity_year_attribute)"
+  ],
   "activities": [
     {
       "@context": {
@@ -17,13 +31,13 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:c1c4c320e964501791430e58ecc9aed5",
+      "@id": "urn:voyager:prov:activity:cfec3e6a04907023a1b97b225a4bcb45",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/geotag"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:geotag"
+        "@id": "urn:voyager:agent:fas-upstream:psd-online.geotag"
       },
       "prov:used": [
         {
@@ -32,7 +46,7 @@
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:psd-online"
+          "@id": "urn:voyager:prov:entity:fas-catalog:psd-online+geotag"
         }
       ],
       "prov:startedAtTime": {
@@ -47,7 +61,22 @@
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
         "deckSlides": "24",
-        "fasSource": "psd-online"
+        "sourceUrl": "https://api.fas.usda.gov/api/psd/commodity/{code}/country/all/year/{year}",
+        "fasSource": "psd-online",
+        "chainIndex": 0,
+        "connectorSteps": [
+          "C1 HTTP GET commodities list",
+          "C2 HTTP GET per-commodity/per-year rows",
+          "C3 delta-check via Solr fi_release_year desc",
+          "C4 per-country row expansion",
+          "C5 unit/attribute/country code lookup (in-file dicts)",
+          "C6 placefinder geo lookup (cached)",
+          "C7 id synthesis (country_commodity_year_attribute)"
+        ],
+        "externalDeps": [
+          "USDA PSD API",
+          "Voyager placefinder Solr"
+        ]
       }
     },
     {
@@ -56,22 +85,22 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:97830e8d6aa4535da83b4897340cccf6",
+      "@id": "urn:voyager:prov:activity:f9fe97a6285efea73825869ba5f8566f",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/classify-commodity"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:classify-commodity"
+        "@id": "urn:voyager:agent:fas-upstream:psd-online.classify-commodity"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:psd-online"
+          "@id": "urn:voyager:prov:entity:fas-catalog:psd-online+geotag"
         }
       ],
       "prov:generated": [
         {
-          "@id": "urn:voyager:prov:entity:fas-catalog:psd-online"
+          "@id": "urn:voyager:prov:entity:fas-catalog:psd-online+classify-commodity"
         }
       ],
       "prov:startedAtTime": {
@@ -86,7 +115,22 @@
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
         "deckSlides": "24",
-        "fasSource": "psd-online"
+        "sourceUrl": "https://api.fas.usda.gov/api/psd/commodity/{code}/country/all/year/{year}",
+        "fasSource": "psd-online",
+        "chainIndex": 1,
+        "connectorSteps": [
+          "C1 HTTP GET commodities list",
+          "C2 HTTP GET per-commodity/per-year rows",
+          "C3 delta-check via Solr fi_release_year desc",
+          "C4 per-country row expansion",
+          "C5 unit/attribute/country code lookup (in-file dicts)",
+          "C6 placefinder geo lookup (cached)",
+          "C7 id synthesis (country_commodity_year_attribute)"
+        ],
+        "externalDeps": [
+          "USDA PSD API",
+          "Voyager placefinder Solr"
+        ]
       }
     },
     {
@@ -95,17 +139,17 @@
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "voyager": "urn:voyager:prov:"
       },
-      "@id": "urn:voyager:prov:activity:59463f10715fc7deb15da848ef08401c",
+      "@id": "urn:voyager:prov:activity:196ce7561baaf296e6067a443e5caee7",
       "@type": "prov:Activity",
       "prov:type": {
         "@id": "https://voyager.ogc/prov/activity/field-normalize"
       },
       "prov:wasAssociatedWith": {
-        "@id": "urn:voyager:agent:fas-upstream:field-normalize"
+        "@id": "urn:voyager:agent:fas-upstream:psd-online.field-normalize"
       },
       "prov:used": [
         {
-          "@id": "urn:voyager:prov:entity:fas-source-raw:psd-online"
+          "@id": "urn:voyager:prov:entity:fas-catalog:psd-online+classify-commodity"
         }
       ],
       "prov:generated": [
@@ -125,7 +169,22 @@
         "declarative": true,
         "hadPrimarySource": "https://docs.google.com/presentation/d/1IybpPfUqDYji0ge-X0n165gMV8pU2UqlZQFKxIykk5k",
         "deckSlides": "24",
-        "fasSource": "psd-online"
+        "sourceUrl": "https://api.fas.usda.gov/api/psd/commodity/{code}/country/all/year/{year}",
+        "fasSource": "psd-online",
+        "chainIndex": 2,
+        "connectorSteps": [
+          "C1 HTTP GET commodities list",
+          "C2 HTTP GET per-commodity/per-year rows",
+          "C3 delta-check via Solr fi_release_year desc",
+          "C4 per-country row expansion",
+          "C5 unit/attribute/country code lookup (in-file dicts)",
+          "C6 placefinder geo lookup (cached)",
+          "C7 id synthesis (country_commodity_year_attribute)"
+        ],
+        "externalDeps": [
+          "USDA PSD API",
+          "Voyager placefinder Solr"
+        ]
       }
     }
   ]
